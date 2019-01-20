@@ -8,8 +8,29 @@ namespace Program
 {
     class Program
     {
+        static double e = 2.71828; 
+        static double epsilon = 100;
+        static double resistance = 100;
+        static double capasity = 10;
+
+
         static void Main(string[] args)
         {
+            int i = 1;
+            bool flag = true;
+            double voltage = 0.0;
+            while (voltage < epsilon)
+            {
+                double temp = -(i / (resistance * capasity));
+                //Console.WriteLine(temp);
+                //Console.WriteLine(Math.Pow(e, temp));
+                voltage = epsilon * (1 - Math.Pow(e, temp));
+                i++;
+                Console.WriteLine(voltage);
+                Console.WriteLine(); 
+            }
+            
+            Console.Read();
         }
     }
 }
