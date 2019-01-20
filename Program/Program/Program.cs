@@ -16,6 +16,17 @@ namespace Program
 
         static void Main(string[] args)
         {
+            //Function();
+
+            Form1 form1 = new Form1();
+            form1.ShowDialog();
+            //form1.Show();
+
+            Console.Read();
+        }
+
+        private static void Function()
+        {
             int i = 1;
             bool flag = true;
             double voltage = 0.0;
@@ -27,10 +38,8 @@ namespace Program
                 voltage = epsilon * (1 - Math.Pow(e, temp));
                 i++;
                 Console.WriteLine(voltage);
-                Console.WriteLine(); 
+                Console.WriteLine();
             }
-            
-            Console.Read();
         }
     }
 }
