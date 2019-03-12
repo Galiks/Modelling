@@ -17,7 +17,7 @@ namespace Program
         private const double epsilon = 100;
         private const double resistance = 100;
         private const double capasity = 10;
-        private const double h = 0.01;
+        private const double h = 0.1;
 
         public Form1()
         {
@@ -31,23 +31,7 @@ namespace Program
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Method1();
-            //Method2();
-            
             Method3();
-
-            //double x1 = -1;
-            //double y1 = 1;
-            //Method3(x1, y1, t, k);
-
-            //double x2 = 1;
-            //double y2 = -1;
-            //Method3(x2, y2, t, k);
-
-            //double x3 = 1;
-            //double y3 = 1;
-            //Method3(x3, y3, t, k);
-
         }
 
         /// <summary>
@@ -90,11 +74,11 @@ namespace Program
                 }
                 double newVoltage = ((epsilon - voltage) / (resistance * capasity)) * h + voltage;
 
-                double newTime = time + h; 
+                double newTime = time + h;
 
                 if (i % 100 == 0)
                 {
-                    chart1.Series[0].Points.AddXY(newTime, newVoltage); 
+                    chart1.Series[0].Points.AddXY(newTime, newVoltage);
                 }
 
                 voltage = newVoltage;
@@ -110,27 +94,51 @@ namespace Program
         /// </summary>
         private void Method3()
         {
-            double x = 0;
-            double y = 0;
+            double x = 10;
+            double y = 10;
+            double a = 10;// x'
+            double b = 10;// y'
             double t = 0.0;
             int i = 0;
-            while (t < 30)
+            double xFromH = a * h + x; //  x(h) = a(0)/h + x(t)
+            double yFromH = b * h + y;
+            while (t < 50)
             {
-                Console.WriteLine(t);
-                double tempA = -5 * x + 2 * y;
-                double tempB = 2 * x - 8 * y;
+                double tempA = (-5 * xFromH + 2 * yFromH) * h + a; // a(h) = f(x)*h + a(0)
+                double nextX = tempA * h + xFromH;
+                xFromH = nextX;
+                a = tempA;
 
-                double nextA = tempA * h + x;
-                double nextB = tempB * h + y;
+                double tempB = (2 * xFromH - 8 * yFromH) * h + b;
+                double nextY = tempB * h + yFromH;
+                yFromH = nextY;
+                b = tempB;
+
+                Console.WriteLine($"ONE: {nextX}{Environment.NewLine}TWO: {nextY}{Environment.NewLine}");
+
                 t = t + h;
 
-                x = nextA;
-                y = nextB;
+                chart1.Series[0].Points.AddXY(t, xFromH);
+                chart1.Series[1].Points.AddXY(t, yFromH);
 
-                chart1.Series[0].Points.AddXY(t, nextA);
-                chart1.Series[1].Points.AddXY(t, nextB);
+
 
                 i++;
+
+                //double tempA = -5 * x + 2 * y;
+                //double tempB = 2 * x - 8 * y;
+
+                //double nextA = tempA * h + x;
+                //double nextB = tempB * h + y;
+                //t = t + h;
+
+                //x = nextA;
+                //y = nextB;
+
+                //chart1.Series[0].Points.AddXY(t, nextA);
+                //chart1.Series[1].Points.AddXY(t, nextB);
+
+                //i++;
             }
 
 

@@ -27,6 +27,7 @@ namespace Program
 
         public void MainMethod()
         {
+            Console.WriteLine("Первый вариант");
             for (int i = 0; i < NumbersOfTests.Length; i++)
             {
                 for (int j = 0; j < NumbersOfTests[i]; j++)
@@ -38,6 +39,25 @@ namespace Program
                     else
                     {
                         Repairs++;
+                    }
+                }
+                Console.WriteLine($"Ответ при {NumbersOfTests[i]} испытаниях: {Environment.NewLine}Не надо в ремонт: {(double)NotRepairs / NumbersOfTests[i] * 100}%{Environment.NewLine}В ремонт: {(double)Repairs / NumbersOfTests[i] * 100}%{Environment.NewLine}");
+                NotRepairs = 0;
+                Repairs = 0;
+            }
+
+            Console.WriteLine("Второй вариант");
+            for (int i = 0; i < NumbersOfTests.Length; i++)
+            {
+                for (int j = 0; j < NumbersOfTests[i]; j++)
+                {
+                    if ((GetRandomInt() % 10) <= 2)
+                    {
+                        Repairs++;
+                    }
+                    else
+                    {
+                        NotRepairs++;
                     }
                 }
                 Console.WriteLine($"Ответ при {NumbersOfTests[i]} испытаниях: {Environment.NewLine}Не надо в ремонт: {(double)NotRepairs / NumbersOfTests[i] * 100}%{Environment.NewLine}В ремонт: {(double)Repairs / NumbersOfTests[i] * 100}%{Environment.NewLine}");
