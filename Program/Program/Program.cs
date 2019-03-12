@@ -14,7 +14,7 @@ namespace Program
             //form1.ShowDialog();
             //Task3 task3 = new Task3();
             //task3.MainMethod();
-            Task4 task4 = new Task4(3);
+            Task4 task4 = new Task4(3, 1000);
             task4.MainMethod();
 
             Console.ReadKey();
