@@ -16,14 +16,22 @@ namespace Program
 
         public void MainMethod()
         {
-            int sumR = 0;
+            double A = RandomValue();
+            double B = RandomValue();
+            double C = RandomValue();
+            Console.WriteLine($"{A}{Environment.NewLine}{B}{Environment.NewLine}{C}{Environment.NewLine}");
+        }
+
+        private double RandomValue()
+        {
+            double sumR = 0;
             for (int i = 0; i < 12; i++)
             {
-                sumR += random.Next(0, 5);
+                sumR += random.NextDouble();
             }
             var pair = GetExpectedValueAndVariance();
-            var X = pair.Item1 + pair.Item2 * (sumR - 6);
-            Console.WriteLine(X);
+            var X = pair.Item1 + (pair.Item2 * (sumR - 6));
+            return Math.Abs(X);
         }
 
         /// <summary>
@@ -60,15 +68,15 @@ namespace Program
             {
                 //output
                 //Console.WriteLine($"{item.Key} - {(double)item.Value / n}");
-                expectedValue += item.Key * (double)item.Value / n;
+                expectedValue += item.Key * ((double)item.Value / n);
                 variance += item.Key * item.Key * (double)item.Value / n;
             }
 
             variance = variance - expectedValue * expectedValue;
 
-            Console.WriteLine(expectedValue);
-            Console.WriteLine(variance);
-            Console.WriteLine();
+            //Console.WriteLine("Мат ожидание - " + expectedValue);
+            //Console.WriteLine("Дисперсия - " + variance);
+            //Console.WriteLine();
 
             return new Tuple<double, double>(expectedValue, variance);
         }

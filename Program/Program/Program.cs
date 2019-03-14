@@ -16,8 +16,10 @@ namespace Program
             //task3.MainMethod();
             //Task4 task4 = new Task4(3, 1000);
             //task4.MainMethod();
-            Task5 task5 = new Task5();
-            task5.MainMethod();
+            //Task5 task5 = new Task5();
+            //task5.MainMethod();
+            Task6 task6 = new Task6();
+            task6.MainMethod();
 
             Console.ReadKey();
         }

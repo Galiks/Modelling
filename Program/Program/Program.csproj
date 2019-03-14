@@ -57,6 +57,7 @@
     <Compile Include="Task3.cs" />
     <Compile Include="Task4.cs" />
     <Compile Include="Task5.cs" />
+    <Compile Include="Task6.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

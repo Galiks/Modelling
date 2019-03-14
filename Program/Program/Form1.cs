@@ -90,7 +90,7 @@ namespace Program
         }
 
         /// <summary>
-        /// Третье задание
+        /// Второе задание
         /// </summary>
         private void Method3()
         {
