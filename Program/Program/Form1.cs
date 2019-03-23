@@ -165,7 +165,12 @@ namespace Program
 
         private void Method4()
         {
-
+            Task6 task = new Task6();
+            foreach (var item in task.XY)
+            {
+                Console.WriteLine($"ONE: {item.Item1}{Environment.NewLine}TWO: {item.Item2}");
+                chart1.Series[0].Points.AddXY(item.Item1, item.Item2);
+            }
         }
     }
 }
