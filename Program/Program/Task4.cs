@@ -25,26 +25,27 @@ namespace Program
         //    Console.WriteLine($"Вероятность того, что все четыре наугад поставленные в данном круге точки окажутся внутри треугольника: {Math.Pow(resultForOnePoint, 4) * 100}%");
         //}
 
-        //private double GetAreaOfCircle()
-        //{
-        //    return Math.PI * Radius * Radius;
-        //}
+        private double GetAreaOfCircle()
+        {
+            return Math.PI * Radius * Radius;
+        }
 
-        //private double GetAreaOfTriangle()
-        //{
-        //    double a = Radius * Math.Sqrt(3);
-        //    Console.WriteLine(a);
-        //    Console.WriteLine(a * a * Math.Sqrt(3) / 4);
-        //    return a * a * Math.Sqrt(3) / 4;
-        //} 
+        private double GetAreaOfTriangle()
+        {
+            double a = Radius * Math.Sqrt(3);
+            //Console.WriteLine(a);
+            //Console.WriteLine(a * a * Math.Sqrt(3) / 4);
+            return a * a * Math.Sqrt(3) / 4;
+        }
         #endregion
 
         private Coordinate[] Coordinates { get; set; }
         private double Radius { get; set; }
         public Random random { get; set; }
-        //не знал как назвать переменную, которая отвечает за количество успехов во всех экспериментах
-        public double Temp { get; set; }
         public int CountOfExperiments { get; set; }
+
+        private double goodPoint = 0.0;
+
 
         public Task4(double radius, int countOfExperiments)
         {
@@ -59,32 +60,25 @@ namespace Program
 
         public void MainMethod()
         {
-            //сейчас будет весело, потому что я не продумал то, что будет дальше))))))))))
             for (int i = 0; i < CountOfExperiments; i++)
             {
                 double notMiss = 0;
-                double miss = 0;
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 1; j++)
                 {
                     if (IsPointInTriange())
                     {
                         notMiss++;
                     }
-                    else
-                    {
-                        miss++;
-                    } 
                 }
-                double inTriangle = notMiss / 4;
-                double notInTriangle = miss / 4;
-                Console.WriteLine($"Вероятность попаданияв в триугольник на {i} эксперименте: {inTriangle * 100}%");
-                if (inTriangle >= notInTriangle)
+                if (notMiss == 1)
                 {
-                    Temp++;
+                    goodPoint++;
                 }
             }
-
-            Console.WriteLine($"Процент успехов на {CountOfExperiments} экспериментов: {(Temp / CountOfExperiments) * 100}%");
+            Console.WriteLine($"Все 4 точки попали: {goodPoint}");
+            double result = (goodPoint / CountOfExperiments);
+            Console.WriteLine($"Процент успехов на {CountOfExperiments} экспериментов: {result * 100}%");
+            Console.WriteLine($"{GetAreaOfTriangle() / GetAreaOfCircle()}");
         }
 
         private Boolean IsPointInTriange()
@@ -105,8 +99,20 @@ namespace Program
 
         private Coordinate GetPoint()
         {
-            int x = random.Next(-5, 5);
-            int y = random.Next(-5, 5);
+            int x = 0;
+            int y = 0;
+            bool flag = false;
+            while (!flag)
+            {
+                x = random.Next(-(int)Radius, (int)Radius + 1);
+                y = random.Next(-(int)Radius, (int)Radius + 1);
+                //x = random.Next(-3, 3);
+                //y = random.Next(-3, 3);
+                if (Math.Sqrt(x * x + y * y) < Radius)
+                {
+                    flag = true;
+                }
+            }
             return new Coordinate(x, y);
         }
     }

@@ -8,30 +8,39 @@ namespace Program
 {
     class Task5
     {
-        public double ElementOne { get; set; }
-        public double ElementTwo { get; set; }
-        public double ElementThree { get; set; }
         private Random random = new Random();
-        private int n = 1000;
+        private readonly int n = 1000;
+        private readonly int valueOne = 5;
+        private readonly int valueTwo = 5;
 
         public void MainMethod()
         {
-            double A = RandomValue();
-            double B = RandomValue();
-            double C = RandomValue();
-            Console.WriteLine($"{A}{Environment.NewLine}{B}{Environment.NewLine}{C}{Environment.NewLine}");
+            for (int i = 0; i < 3; i++)
+            {
+                var result = GetExpectedValueAndVariance();
+                Console.WriteLine($"Мат ожидание: {result.Item1}");
+                Console.WriteLine($"Среднее квадратическое отклонение: {result.Item2}");
+                Console.WriteLine();
+            }
         }
 
-        private double RandomValue()
+        private double GetMaxRandomValue()
         {
-            double sumR = 0;
-            for (int i = 0; i < 12; i++)
+            double max = 0.0;
+            for (int j = 0; j < 3; j++)
             {
-                sumR += random.NextDouble();
+                double sumR = 0;
+                for (int i = 0; i < 12; i++)
+                {
+                    sumR += random.NextDouble();
+                }
+                var X = valueOne + valueTwo * (sumR - 6);
+                if (X > max)
+                {
+                    max = X;
+                }
             }
-            var pair = GetExpectedValueAndVariance();
-            var X = pair.Item1 + (pair.Item2 * (sumR - 6));
-            return Math.Abs(X);
+            return max;
         }
 
         /// <summary>
@@ -40,43 +49,25 @@ namespace Program
         /// <returns>Метод возвращает пару, где первый элемент математическое ожидание, а второй - дисперсия</returns>
         private Tuple<double, double> GetExpectedValueAndVariance()
         {
-            Dictionary<double, int> pairs = new Dictionary<double, int>();
-            for (int i = 0; i < n; i++)
-            {
-                double x = random.Next(1, 11);
-                if (pairs.ContainsKey(x))
-                {
-                    int count = pairs[x];
-                    count++;
-                    pairs.Remove(x);
-                    pairs.Add(x, count);
-                }
-                else
-                {
-                    pairs.Add(x, 1);
-                }
-            }
-
-            SortedDictionary<double, int> sortedPairs = new SortedDictionary<double, int>(pairs);
-
             //мат ожидание
             double expectedValue = 0.0;
             //дисперсия
             double variance = 0.0;
 
-            foreach (var item in sortedPairs)
+            for (int i = 0; i < n; i++)
             {
-                //output
-                //Console.WriteLine($"{item.Key} - {(double)item.Value / n}");
-                expectedValue += item.Key * ((double)item.Value / n);
-                variance += item.Key * item.Key * (double)item.Value / n;
+                expectedValue += GetMaxRandomValue();
             }
 
-            variance = variance - expectedValue * expectedValue;
+            expectedValue = expectedValue / n;
 
-            //Console.WriteLine("Мат ожидание - " + expectedValue);
-            //Console.WriteLine("Дисперсия - " + variance);
-            //Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                variance += Math.Pow(GetMaxRandomValue() - expectedValue, 2);
+            }
+
+            variance = Math.Sqrt(variance / (n - 1));
+
 
             return new Tuple<double, double>(expectedValue, variance);
         }
@@ -155,3 +146,35 @@ namespace Program
     }
 }
 
+//Dictionary<double, int> pairs = new Dictionary<double, int>();
+//for (int i = 0; i < n; i++)
+//{
+//    double x = random.Next(1, 11);
+//    if (pairs.ContainsKey(x))
+//    {
+//        int count = pairs[x];
+//        count++;
+//        pairs.Remove(x);
+//        pairs.Add(x, count);
+//    }
+//    else
+//    {
+//        pairs.Add(x, 1);
+//    }
+//}
+
+//SortedDictionary<double, int> sortedPairs = new SortedDictionary<double, int>(pairs);
+
+//foreach (var item in sortedPairs)
+//{
+//    //output
+//    //Console.WriteLine($"{item.Key} - {(double)item.Value / n}");
+//    expectedValue += item.Key * ((double)item.Value / n);
+//    variance += item.Key * item.Key * (double)item.Value / n;
+//}
+
+//variance = variance - expectedValue * expectedValue;
+
+////Console.WriteLine("Мат ожидание - " + expectedValue);
+////Console.WriteLine("Дисперсия - " + variance);
+////Console.WriteLine();
