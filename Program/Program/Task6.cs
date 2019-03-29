@@ -9,7 +9,7 @@ namespace Program
     class Task6
     {
 
-        private readonly int N = 700;
+        public readonly int N = 700;
         private readonly double S = 0.05;
         private int time = 0;
         private int[] battery;
@@ -32,15 +32,15 @@ namespace Program
 
         public void MainMethod()
         {
-            Console.WriteLine("Ха-ха! ТУТ ПУСТО! Всё в конструкторе!");
+            SecondTry();
         }
 
-        private int[] FindWorkTime(int[] battery)
+        public int[] FindWorkTime(int[] battery)
         {
             while (i < N)
             {
                 time++;
-                if (random.Next(0,101) > r * 100)
+                if (random.Next(0, 101) > r * 100)
                 {
                     battery[i++] = time;
                 }
@@ -48,17 +48,17 @@ namespace Program
             return battery;
         }
 
-        private List<Tuple<int, double>> FindDependency()
+        public List<Tuple<int, double>> FindDependency()
         {
             List<Tuple<int, double>> XY = new List<Tuple<int, double>>();
-            for (r = S; r < 1; r+=S)
+            for (r = S; r < 1; r += S)
             {
                 time = 0;
                 i = 0;
                 while (i < N)
                 {
                     time++;
-                    if (random.Next(0,101) > r * 100)
+                    if (random.Next(0, 101) > r * 100)
                     {
                         i++;
                     }
@@ -67,6 +67,17 @@ namespace Program
             }
 
             return XY;
+        }
+
+        private void SecondTry()
+        {
+            double lambda = 1 / 85.75;
+            double time = 0.0;
+            for (int i = 0; i < 700; i++)
+            {
+                time = time + (-1 / lambda * Math.Log(random.NextDouble()));
+                Console.WriteLine(time);
+            }
         }
     }
 }

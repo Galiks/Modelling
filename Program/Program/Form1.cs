@@ -31,7 +31,7 @@ namespace Program
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Method4();
+            ForAlex();
         }
 
         /// <summary>
@@ -170,6 +170,36 @@ namespace Program
             {
                 Console.WriteLine($"ONE: {item.Item1}{Environment.NewLine}TWO: {item.Item2}");
                 chart1.Series[0].Points.AddXY(item.Item1, item.Item2);
+            }
+        }
+
+        public void ForAlex()
+        {
+            double time = 0.0;
+            double volume = 100.0;
+            double X = 0.0;
+            double a = 10.0;
+            double nu = 10.0;
+            double S = 0.5;
+            int i = 0;
+            double myH = 1;
+
+            while (volume > X)
+            {
+                if (i > 400000)
+                {
+                    break;
+                }
+                double newX = (a*S*(1 - X/volume) - nu*X) * myH + X;
+
+                double newTime = time + myH;
+
+                chart1.Series[0].Points.AddXY(newTime, newX);
+
+
+                X = newX;
+                time = newTime;
+                i++;
             }
         }
     }
