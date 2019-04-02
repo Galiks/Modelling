@@ -10,17 +10,9 @@ namespace Program
     {
         static void Main(string[] args)
         {
-            //int[] test = new int[10];
-
-            //while (i < 10)
-            //{
-            //    test[i++] = i;
-            //}
-
-            //foreach (var item in test)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            //double lambda = 1 / 85.35;
+            //Random random = new Random();
+            //Console.WriteLine(-lambda * Math.Log(random.NextDouble(), Math.E));
 
             Form1 form1 = new Form1();
             form1.ShowDialog();
