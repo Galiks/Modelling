@@ -52,14 +52,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Task7.cs" />
-    <Compile Include="Task7\Task7.cs" />
+    <Compile Include="Task7\Requirement.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Task3.cs" />
     <Compile Include="Task4.cs" />
     <Compile Include="Task5.cs" />
     <Compile Include="Task6.cs" />
+    <Compile Include="Task7\QueuingSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

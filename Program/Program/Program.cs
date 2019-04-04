@@ -22,9 +22,11 @@ namespace Program
             //task4.MainMethod();
             //Task5 task5 = new Task5();
             //task5.MainMethod();
-            Task6 task6 = new Task6();
-            task6.MainMethod();
-
+            //Task6 task6 = new Task6();
+            //task6.MainMethod();
+            QueuingSystem task = new QueuingSystem(1000);
+            task.Main();
+            Console.WriteLine("THE END");
             Console.ReadKey();
         }
     }
