@@ -104,12 +104,14 @@ namespace Program
         private void ThirdTry()
         {
             double time = 0.0;
-            TimeAndN.Add(new Tuple<double, double>(time, N));
+            //TimeAndN.Add(new Tuple<double, double>(time, N));
             for (int i = N; i >= 0; i--)
             {
                 time += GetExponentionValue();
-                TimeAndN.Add(new Tuple<double, double>(time, i));
+                //TimeAndN.Add(new Tuple<double, double>(time, i));
             }
+            Console.WriteLine($"Время до полной разрядки батареи: {time}");
+            Console.WriteLine((double)N/85.35);
         }
 
         private double GetExponentionValue()
