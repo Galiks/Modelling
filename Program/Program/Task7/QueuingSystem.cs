@@ -65,6 +65,7 @@ namespace Program
         private const double lambda = 85.35;
         private readonly double T = 1000;
         public Requirement GetRequirement { get; set; }
+        public Requirement GetSecondRequirement { get; set; }
 
         /// <summary>
         /// Конструктор для СМО
@@ -82,29 +83,23 @@ namespace Program
         public void Main()
         {
             LeadProgram();
+            Console.WriteLine(CurrentModelTime);
         }
 
         /// <summary>
         /// Сегмент процесса, связанный с поступлением требования в СМО.
         /// </summary>
-        private void SourceClaim()
+        private void SourceClaim(Requirement requirement)
         {
             //Console.WriteLine("Событие 1: поступление требования из источника");
             if (CurrentModelTime == ActivationTimeSource)
             {
-                if (Requirements.Count() != 0)
-                {
-                    GetRequirement = Requirements.Dequeue();
-                    Console.WriteLine($"В очередь поступило требование");
-                    GetRequirement.EntryPointTime = CurrentModelTime;
-                    ImitationQueue.Enqueue(GetRequirement);
-                    ActivationTimeSource = CurrentModelTime + GetExponentionValue(); 
-                }
-                else
-                {
-                    Console.WriteLine($"Требования кончились!");
-                    FlagOfExit = true;
-                }
+
+                Console.WriteLine($"В очередь поступило {requirement.Name}");
+                requirement.EntryPointTime = CurrentModelTime;
+                ImitationQueue.Enqueue(requirement);
+                ActivationTimeSource = CurrentModelTime + GetExponentionValue();
+
             }
         }
 
@@ -120,6 +115,11 @@ namespace Program
                 IsBusy = true;
                 GetRequirement = ImitationQueue.Dequeue();
                 GetRequirement.StartServiceTime = CurrentModelTime;
+                //с какой-то вероятностью появляется второе требование
+                //if (random.Next(1, 2) == 1)
+                //{
+                //    GetSecondRequirement = Requirements.Dequeue();
+                //}
                 CompletionOfServiceRequirementsTime = CurrentModelTime + GetExponentionValue();
             }
         }
@@ -148,9 +148,9 @@ namespace Program
         private void LeadProgram()
         {
             Requirements = new Queue<Requirement>();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 2; i++)
             {
-                Requirements.Enqueue(new Requirement($"Требование №{i + 1}"));
+                Requirements.Enqueue(new Requirement($"Требование №{i}"));
             }
 
             CurrentModelTime = 0;
@@ -164,11 +164,15 @@ namespace Program
             {
                 if (CurrentModelTime == ActivationTimeSource)
                 {
-                    SourceClaim();
-                }
-                if (FlagOfExit)
-                {
-                    break;
+                    if (Requirements.Count() != 0)
+                    {
+                        GetRequirement = Requirements.Dequeue();
+                        SourceClaim(GetRequirement);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 if (ImitationQueue.Count() > 0 && !IsBusy)
                 {
