@@ -56,7 +56,7 @@ namespace Program
         /// <summary>
         /// Имитация источника требований
         /// </summary>
-        public Queue<Requirement> Requirements { get; set; }
+        public List<Requirement> Requirements { get; set; }
         private readonly Random random;
 
         /// <summary>
@@ -147,10 +147,10 @@ namespace Program
         /// </summary>
         private void LeadProgram()
         {
-            Requirements = new Queue<Requirement>();
-            for (int i = 0; i < 2; i++)
+            Requirements = new List<Requirement>();
+            for (int i = 0; i < 5; i++)
             {
-                Requirements.Enqueue(new Requirement($"Требование №{i}"));
+                Requirements.Add(new Requirement($"Требование №{i}"));
             }
 
             CurrentModelTime = 0;
@@ -166,7 +166,8 @@ namespace Program
                 {
                     if (Requirements.Count() != 0)
                     {
-                        GetRequirement = Requirements.Dequeue();
+                        GetRequirement = GetRandomRequirement();
+                        Requirements.Remove(GetRequirement);
                         SourceClaim(GetRequirement);
                     }
                     else
@@ -188,11 +189,29 @@ namespace Program
             }
         }
 
+        /// <summary>
+        /// Метод для случайного выбора требования
+        /// </summary>
+        /// <returns>Требование</returns>
+        private Requirement GetRandomRequirement()
+        {
+            int indexOfRequirement = random.Next(0, Requirements.Count());
+            return Requirements[indexOfRequirement];
+        }
+
+        /// <summary>
+        /// Метод для генерирования псевдобесконечности
+        /// </summary>
+        /// <returns>Псевдобесконечность</returns>
         private double GetPseudoInfinity()
         {
             return T + Math.Pow(10, 6);
         }
 
+        /// <summary>
+        /// Метод для генерирования экспоненциальной случайной величины
+        /// </summary>
+        /// <returns>Экспоненциальная случайная величина</returns>
         private double GetExponentionValue()
         {
             return -(1/lambda * Math.Log(random.NextDouble(), Math.E));
