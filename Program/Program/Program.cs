@@ -24,7 +24,7 @@ namespace Program
             //task5.MainMethod();
             //Task6 task6 = new Task6();
             //task6.MainMethod();
-            QueuingSystem task = new QueuingSystem(1000);
+            QueuingSystem task = new QueuingSystem(1000, 10);
             task.Main();
             Console.WriteLine("THE END");
             Console.ReadKey();
